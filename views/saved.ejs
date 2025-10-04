@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head><title>Saved Recipes</title></head>
+<body>
+  <h1>Saved Recipes</h1>
+  <a href="/">Back to Generator</a>
+
+  <% recipes.forEach(recipe => { %>
+    <div>
+      <h3><%= recipe.title %></h3>
+      <p><%= recipe.instructions %></p>
+      <p><strong>Ingredients:</strong> <%= recipe.ingredients.join(', ') %></p>
+
+      
+      <form action="/recipes/feedback/<%= recipe.id %>" method="POST">
+      <label>Rate:</label>
+      <select name="rating">
+        <option value="">--</option>
+        <% for(let i=1; i<=5; i++) { %>
+          <option value="<%= i %>"><%= i %> ⭐</option>
+        <% } %>
+      </select>
+
+      <br/>
+      <label>Feedback:</label>
+      <textarea name="feedback" rows="2" cols="40"></textarea>
+
+      <button type="submit">Submit</button>
+    </form>
+
+    <% if (recipe.rating) { %>
+      <p>Rating: <%= recipe.rating %> ⭐</p>
+      <p>Feedback: <%= recipe.feedback %></p>
+    <% } %>
+
+
+      <form action="/recipes/delete/<%= recipe.id %>" method="POST">
+        <button type="submit">Delete</button>
+      </form>
+    </div>
+  <% }) %>
+</body>
+</html>

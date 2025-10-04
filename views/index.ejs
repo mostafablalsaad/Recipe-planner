@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head><title>Meal Planner</title></head>
+<body>
+  <h1>Enter Ingredients or Preferences</h1>
+  <form action="/recipes/generate" method="POST">
+    <textarea name="ingredients" placeholder="e.g. chicken, rice, broccoli" rows="5" cols="40"></textarea>
+    <br/>
+    <button type="submit">Generate Recipe</button>
+  </form>
+
+  <% if (recipes && recipes.length) { %>
+    <h2>Generated Recipes</h2>
+    <% recipes.forEach(recipe => { %>
+      <div>
+        <h3><%= recipe.title %></h3>
+        <p><%= recipe.instructions %></p>
+        <form action="/recipes/save" method="POST">
+          <input type="hidden" name="title" value="<%= recipe.title %>"/>
+          <input type="hidden" name="instructions" value="<%= recipe.instructions %>"/>
+          <input type="hidden" name="ingredients" value="<%= ingredients.join(',') %>"/>
+          <button type="submit">Save Recipe</button>
+        </form>
+      </div>
+    <% }) %>
+  <% } %>
+
+  <a href="/recipes/saved">View Saved Recipes</a>
+</body>
+</html>
