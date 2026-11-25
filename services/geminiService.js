@@ -29,7 +29,7 @@ function parseRecipes(text) {
   const recipes = [];
 
   // Match both styles: "### 1. Title" OR "### Recipe 2: Title"
-  const blocks = text.split(/(?=^###\s*(?:Recipe\s*\d+:|\d+\.)\s*)/gm).slice(1);
+  const blocks = text.split(/(?=^###\s*(?:Recipe\s*\d+:|\d+\.)\s*)/gm).filter(block => /^###\s*(?:Recipe\s*\d+:|\d+\.)/.test(block));
   blocks.forEach(block => {
     // Extract the title using regex to handle both styles
     const titleMatch = block.match(/^###\s*(?:Recipe\s*\d+:|\d+\.)\s*(.+)/m);
