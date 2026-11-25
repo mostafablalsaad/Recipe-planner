@@ -1,13 +1,14 @@
 // const axios = require('axios');
 // require('dotenv').config();
+import "dotenv/config";
 import { GoogleGenAI } from "@google/genai";
 export const generateRecipesFromGemini = async (ingredients) => {
-
-    const ai = new GoogleGenAI({ apiKey: "AIzaSyDdjRsTXfBm10wGXYkk2loX8RgraAjfwd0" });
   const prompt = `Suggest 1–2 meal recipes using these ingredients: ${ingredients.join(', ')}. 
 Return title and instructions for each recipe.`;
 console.log("start");
   try {
+      if (!process.env.GEMINI_API_KEY) throw new Error("GEMINI_API_KEY is not set");
+      const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
       const response = await ai.models.generateContent({
         model: "gemini-2.5-flash",
          contents: prompt,
